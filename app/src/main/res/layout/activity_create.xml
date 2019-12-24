@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/apartment_toolbar"
+        android:layout_width="match_parent"
+        app:title="@string/apartment_toolbar_info_title"
+        app:titleTextColor="@android:color/white"
+        android:layout_height="?android:actionBarSize"
+        android:background="@color/colorPrimary"
+        />
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="8dp"
+            >
+
+            <ImageView
+                android:id="@+id/imageview_photo"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="visible"
+                app:srcCompat="@android:drawable/btn_plus" />
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Адрес"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Площадь"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Цена"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Количество комнат"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_rooms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Этаж"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_floor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_save"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Сохранить"
+                android:textSize="18sp"
+                android:padding="12dp"
+                />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
