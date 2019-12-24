@@ -1,14 +1,12 @@
 package ru.sarexer.eapp.activities;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -69,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void startMainActivity(){
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, ApartmentsActivity.class));
     }
 
     private void saveUserId(int uid){
@@ -93,18 +91,24 @@ public class LoginActivity extends AppCompatActivity {
                 super.onPostExecute(user);
                 if(user!= null){
                     saveUserId(user.uid);
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    startActivity(new Intent(getApplicationContext(), ApartmentsActivity.class));
+                }else{
+                    showErrorToast();
                 }
             }
         }.execute();
+    }
+
+    private void showErrorToast(){
+        Toast.makeText(this, "Неправильный логин или пароль", Toast.LENGTH_SHORT).show();
     }
 
     private void generateUsers(){
         new AsyncTask<Void,Void,Void>(){
             @Override
             protected Void doInBackground(Void... voids) {
-                User user1 = new User(0, "log1", "123");
-                User user2 = new User(0,"log2", "123");
+                User user1 = new User(0, "user1", "123");
+                User user2 = new User(0,"user2", "123");
 
                 database.userDao().insertAll(user1,user2);
                 return null;

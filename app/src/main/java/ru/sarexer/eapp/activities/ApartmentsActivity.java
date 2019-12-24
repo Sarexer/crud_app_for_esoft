@@ -24,7 +24,7 @@ import ru.sarexer.eapp.db.entity.Apartment;
 
 import static android.content.SharedPreferences.*;
 
-public class MainActivity extends AppCompatActivity {
+public class ApartmentsActivity extends AppCompatActivity {
     private SharedPreferences preferences;
     private RecyclerView recyclerView;
     private List<Apartment> apartments;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_create:
-                startActivity(new Intent(this, ApartmentActivity.class));
+                startActivity(new Intent(this, CreateActivity.class));
                 break;
             case R.id.action_exit:
                 forgetUser();
@@ -79,14 +79,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         apartments = new ArrayList<>();
         recyclerView.setAdapter(new ApartmentsAdapter(apartments));
-
     }
 
     private void updateRecyclerView() {
         ApartmentsAdapter adapter = (ApartmentsAdapter) recyclerView.getAdapter();
         adapter.setApartments(apartments);
         recyclerView.getAdapter().notifyDataSetChanged();
-        System.out.println("");
     }
 
     private void startLoginActivity() {

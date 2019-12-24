@@ -20,6 +20,12 @@ public interface ApartmentDao {
     @Query("SELECT * FROM apartment WHERE uid IN (:apartmentIds)")
     List<Apartment> loadAllByIds(int[] apartmentIds);
 
+    @Query("select * from apartment where uid = :uid")
+    Apartment findById(int uid);
+
+    @Query("select * from apartment where uid = (SELECT MAX(uid)  FROM apartment)")
+    Apartment lastApartment();
+
     @Insert
     void insertAll(Apartment... users);
 

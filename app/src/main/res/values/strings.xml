@@ -1,9 +1,19 @@
 <resources>
-    <string name="app_name">eapp</string>
-    <string name="action_exit">exit</string>
+    <string name="app_name">Esoft App</string>
+    <string name="action_exit">Выход из аккаунта</string>
     <string name="action_create">create</string>
     <string name="apartments_toolbar_title">Список квартир</string>
     <string name="apartment_toolbar_info_title">Просмотр квартиры</string>
     <string name="apartment_toolbar_edit_title">Редактирование</string>
     <string name="app_preferences">settings</string>
+    <string name="hint_address">Адрес</string>
+    <string name="hint_area">Площадь</string>
+    <string name="hint_price">Цена</string>
+    <string name="hint_rooms">Количество комнат</string>
+    <string name="hint_floor">Этаж</string>
+    <string name="save">Сохранить</string>
+    <string name="login">login</string>
+    <string name="password">password</string>
+    <string name="btn_enter">Login</string>
+    <string name="hint_price_per_meter">Цена за кв.м</string>
 </resources>

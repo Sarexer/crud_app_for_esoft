@@ -11,8 +11,11 @@
 
         <EditText
             android:id="@+id/txt_login"
-            android:layout_margin="12dp"
-            android:hint="login"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="36dp"
+            android:layout_marginRight="36dp"
+            android:hint="@string/login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
@@ -22,10 +25,13 @@
 
         <EditText
             android:id="@+id/txt_password"
-            android:layout_margin="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="36dp"
+            android:layout_marginRight="36dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="password"
+            android:hint="@string/password"
             android:textAlignment="center"
             android:textSize="24sp"
             android:layout_weight="1"
@@ -39,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginTop="48dp"
-            android:text="Login"
+            android:text="@string/btn_enter"
             android:background="@android:color/holo_green_dark"
             />
 

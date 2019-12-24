@@ -30,12 +30,12 @@ import ru.sarexer.eapp.db.AppDatabase;
 import ru.sarexer.eapp.db.DbSingleton;
 import ru.sarexer.eapp.db.entity.Apartment;
 
-public class ApartmentActivity extends AppCompatActivity {
+public class CreateActivity extends AppCompatActivity {
     private static final int SELECT_PICTURE = 1;
     private ImageView imageViewPhoto;
     private TextInputEditText txtAddress, txtArea, txtPrice, txtRooms, txtFloor;
     private MaterialButton btnSave;
-    private Apartment apartment;
+    private Apartment apartment = new Apartment();
     private AppDatabase database;
     Toolbar toolBar;
 
@@ -44,36 +44,13 @@ public class ApartmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
 
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            apartment = (Apartment) bundle.getSerializable("apartment");
-        }
-
         database = DbSingleton.getInstance(this).database;
 
         toolBar = findViewById(R.id.apartment_toolbar);
         setSupportActionBar(toolBar);
 
         initView();
-        fillViews();
         setOnClickListeners();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_activity_apartment, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_edit:
-                setEnableView(true);
-                setToolBarTitle(R.string.apartment_toolbar_edit_title);
-                break;
-        }
-        return true;
     }
 
     private void initView() {
@@ -86,39 +63,6 @@ public class ApartmentActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btn_save);
     }
 
-    private void fillViews() {
-        if (apartment != null) {
-            Picasso.get().load(Uri.parse(apartment.photo)).centerCrop().fit()
-                    .into(imageViewPhoto);
-            txtAddress.setText(apartment.address);
-            txtArea.setText(Float.toString(apartment.area));
-            txtPrice.setText(Float.toString(apartment.price));
-            txtRooms.setText(Integer.toString(apartment.numberOfRooms));
-            txtFloor.setText(Integer.toString(apartment.floor));
-            setEnableView(false);
-
-            btnSave.setOnClickListener(v -> saveApartment("edit"));
-        } else {
-            apartment = new Apartment();
-            btnSave.setOnClickListener(v -> saveApartment("create"));
-        }
-    }
-
-    private void setEnableView(boolean bool) {
-        imageViewPhoto.setEnabled(bool);
-        txtAddress.setEnabled(bool);
-        txtArea.setEnabled(bool);
-        txtPrice.setEnabled(bool);
-        txtRooms.setEnabled(bool);
-        txtFloor.setEnabled(bool);
-        btnSave.setVisibility(bool ? View.VISIBLE : View.GONE);
-    }
-
-    private void setToolBarTitle(int resourceId) {
-        String title = getResources().getString(resourceId);
-        toolBar.setTitle(title);
-    }
-
     private void setOnClickListeners() {
         imageViewPhoto.setOnClickListener(view -> {
             Intent intent = new Intent();
@@ -126,9 +70,32 @@ public class ApartmentActivity extends AppCompatActivity {
             intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
         });
+
+        btnSave.setOnClickListener(v -> saveApartment());
     }
 
-    private void saveApartment(String mode) {
+    private boolean isValidate(){
+        String address = txtAddress.getText().toString();
+        String area = (txtArea.getText().toString());
+        String price = (txtPrice.getText().toString());
+        String rooms = (txtRooms.getText().toString());
+        String floor = (txtFloor.getText().toString());
+
+        if(floor.equals("") || area.equals("") || apartment.photo == null
+                || address.equals("") || price.equals("") || rooms.equals("")){
+            showValidateMessage();
+            return false;
+        }
+        return true;
+    }
+
+    private void showValidateMessage(){
+        Toast.makeText(this, "Все поля должны быть заполнены", Toast.LENGTH_SHORT).show();
+    }
+    private void saveApartment() {
+        if(!isValidate()){
+            return;
+        }
         try {
             apartment.address = txtAddress.getText().toString();
             apartment.area = Float.parseFloat(txtArea.getText().toString());
@@ -136,19 +103,20 @@ public class ApartmentActivity extends AppCompatActivity {
             apartment.numberOfRooms = Integer.parseInt(txtRooms.getText().toString());
             apartment.floor = Integer.parseInt(txtFloor.getText().toString());
 
-            if (mode.equals("create")) {
-                insertApartmentIntoDb();
-                finish();
-            } else if (mode.equals("edit")) {
-                updateApartmentInDb();
-                setEnableView(false);
-            }
-
-            setToolBarTitle(R.string.apartment_toolbar_info_title);
+            insertApartmentIntoDb();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+    private void startApartmentInfoActvity(){
+        Intent intent = new Intent(this, ApartmentInfoActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("apartment", apartment);
+        intent.putExtras(bundle);
+
+        startActivity(intent);
     }
 
     private void insertApartmentIntoDb() {
@@ -156,18 +124,15 @@ public class ApartmentActivity extends AppCompatActivity {
             @Override
             protected Void doInBackground(Void... voids) {
                 database.apartmentDao().insertAll(apartment);
-                System.out.println(database.apartmentDao().getAll());
+                apartment = database.apartmentDao().lastApartment();
                 return null;
             }
-        }.execute();
-    }
 
-    private void updateApartmentInDb() {
-        new AsyncTask<Void, Void, Void>() {
             @Override
-            protected Void doInBackground(Void... voids) {
-                database.apartmentDao().updateApartment(apartment);
-                return null;
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                finish();
+                startApartmentInfoActvity();
             }
         }.execute();
     }
@@ -179,10 +144,9 @@ public class ApartmentActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
-                //Get ImageURi and load with help of picasso
-                //Uri selectedImageURI = data.getData();
                 Uri uri = data.getData();
                 apartment.photo = uri.toString();
+
                 Picasso.get().load(Uri.parse(apartment.photo)).centerCrop().fit()
                         .into(imageViewPhoto);
             }

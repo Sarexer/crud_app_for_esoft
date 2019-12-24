@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView android:layout_width="match_parent"
+<com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:id="@+id/item_card"
     android:clickable="true"
     android:focusable="true"
@@ -9,35 +11,39 @@
     android:layout_marginRight="@dimen/mtrl_card_spacing"
     android:minHeight="200dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="12dp">
-
-        <ImageView
-            android:id="@+id/item_photo"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/item_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Цена" />
+            android:textSize="18sp"
+            tools:text="@string/hint_price" />
+        <ImageView
+            android:id="@+id/item_photo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
 
         <TextView
             android:id="@+id/item_area"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Площадь" />
+            android:layout_marginBottom="8dp"
+            android:textSize="16sp"
+            tools:text="@string/hint_area" />
 
         <TextView
             android:id="@+id/item_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Адресс" />
+            android:textSize="16sp"
+            tools:text="@string/hint_address" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
